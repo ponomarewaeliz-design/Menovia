@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#f5f0fb">
+    <title>Menovia — забота о цикле</title>
+    <style>
+        :root{--ink:#302c3c;--muted:#777184;--lav:#e9def7;--sage:#dce9df;--line:#e9e2ee;--accent:#76609a}
+        *{box-sizing:border-box}
+        body{margin:0;background:linear-gradient(180deg,#fbf8fd,#f6faf6);font:16px/1.55 system-ui,sans-serif;color:var(--ink)}
+        button,input,select,textarea{font:inherit}
+        button{cursor:pointer}
+        .wrap{max-width:1000px;margin:auto;padding:18px}
+        header{display:flex;justify-content:space-between;align-items:center;padding:8px 0 20px}
+        .brand{display:flex;gap:12px;align-items:center}
+        .logo{width:48px;height:48px;border-radius:17px;background:linear-gradient(145deg,var(--lav),var(--sage));display:grid;place-items:center;font-size:25px}
+        .brand h1{margin:0;font-size:22px}
+        .brand p{margin:0;color:var(--muted);font-size:13px}
+        .pill{border:1px solid var(--line);border-radius:99px;padding:7px 12px;color:var(--muted);font-size:12px}
+        nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+        nav button{border:1px solid transparent;border-radius:14px;padding:10px 15px;background:transparent;color:var(--muted)}
+        nav button.active{background:var(--lav);color:var(--ink);border-color:#e2d5f1}
+        .hero{border-radius:28px;background:linear-gradient(120deg,#eee4fa,#f8e8eb 52%,#e6f0e7);padding:clamp(24px,5vw,48px);display:grid;grid-template-columns:1.3fr .7fr;gap:25px;align-items:center}
+        .eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:1.5px;color:#6d6080;font-weight:700}
+        .hero h2{font-size:clamp(30px,5vw,48px);line-height:1.12;margin:12px 0;letter-spacing:-1px}
+        .hero p{color:#5e586a}
+        .orb{justify-self:center;width:min(210px,100%);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff 0 9%,#f5e7f8 10% 30%,#e5d8f3 31% 52%,#dbe9df 53% 75%,#d6e2dc 76%);display:grid;place-items:center;font-size:70px}
+        .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+        .btn{border:0;border-radius:13px;padding:11px 16px;background:var(--accent);color:white;font-weight:650}
+        .btn.secondary{background:white;color:var(--ink);border:1px solid var(--line)}
+        .btn.danger{background:#f8e5e8;color:#7d3c4b}
+        .btn.small{font-size:13px;padding:7px 10px}
+        .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin:18px 0}
+        .card,.panel,.edu{background:#fffdfd;border:1px solid var(--line);border-radius:22px;padding:21px;margin-bottom:15px}
+        .card h3,.panel h3,.edu h3{margin:0 0 7px}
+        .card p,.muted,.edu p,.edu li{color:var(--muted)}
+        .section-title{margin:28px 0 14px}
+        .section-title h2{margin:0;font-size:27px}
+        .section-title p{margin:4px 0;color:var(--muted)}
+        .formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+        .field{display:flex;flex-direction:column;gap:6px}
+        .field.full{grid-column:1/-1}
+        label{font-weight:650;font-size:14px}
+        input,select,textarea{width:100%;border:1px solid #ded6e5;border-radius:12px;padding:11px;background:white;color:var(--ink)}
+        textarea{min-height:85px}
+        .hint{font-size:12px;color:var(--muted)}
+        .checks{display:flex;flex-wrap:wrap;gap:9px}
+        .check{display:flex;align-items:center;gap:7px;background:#f7f3fa;border-radius:99px;padding:7px 11px;font-size:13px}
+        .check input{width:auto}
+        .notice{border-radius:16px;padding:14px 16px;background:#f2edf8;color:#625572;font-size:14px;margin:16px 0}
+        .warn{background:#fff0e7;color:#754f36}
+        .entry{border:1px solid var(--line);border-radius:16px;padding:14px;margin:10px 0;display:flex;justify-content:space-between;gap:14px;align-items:flex-start}
+        .entry p{margin:4px 0;color:var(--muted);font-size:14px}
+        .empty{text-align:center;padding:25px;background:#faf7fc;border-radius:16px;color:var(--muted)}
+        .education{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+        .report{white-space:pre-wrap;background:#faf8fc;border:1px dashed #d6c8e4;border-radius:16px;padding:18px;min-height:140px;font-size:14px}
+        .hidden{display:none!important}
+        footer{text-align:center;color:var(--muted);font-size:12px;margin:28px 0 10px}
+        @media(max-width:700px){.wrap{padding:13px}.hero{grid-template-columns:1fr}.orb{width:120px;grid-row:1}.grid,.education,.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}header{align-items:flex-start}.pill{display:none}nav{display:grid;grid-template-columns:repeat(2,1fr)}nav button{background:#ffffffb8;border-color:var(--line)}.entry{flex-direction:column}.hero h2{font-size:34px}}
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <header>
+            <div class="brand">
+                <div class="logo">✿</div>
+                <div><h1>Menovia</h1><p>бережно к себе, внимательнее к циклу</p></div>
+            </div>
+            <div class="pill">Демонстрационная версия</div>
+        </header>
+        <nav>
+            <button class="active" data-page="home">Главная</button>
+            <button data-page="diary">Дневник</button>
+            <button data-page="learn">Узнать</button>
+            <button data-page="doctor">Для врача</button>
+        </nav>
+        <main>
+            <section id="page-home" class="page">
+                <div class="hero">
+                    <div>
+                        <div class="eyebrow">Твоё здоровье — без стыда и догадок</div>
+                        <h2>Лучше понимать свой цикл — шаг за шагом.</h2>
+                        <p>Menovia помогает записывать менструации, замечать симптомы и подготовить сводку для разговора с врачом.</p>
+                        <div class="actions">
+                            <button class="btn" data-go="diary">Открыть дневник</button>
+                            <button class="btn secondary" data-go="learn">Изучить материалы</button>
+                        </div>
+                    </div>
+                    <div class="orb">🌷</div>
+                </div>
+                <div class="grid">
+                    <article class="card"><h3>🌙 Записывай</h3><p>Даты, длительность, характер кровотечения, боль и симптомы.</p></article>
+                    <article class="card"><h3>🌿 Разбирайся</h3><p>Короткие материалы о цикле и о том, когда нужна помощь.</p></article>
+                    <article class="card"><h3>🩺 Готовься к приёму</h3><p>Собери наблюдения в сводку для врача.</p></article>
+                </div>
+                <div class="notice">Это прототип для обучения и тестирования. Он не устанавливает диагнозы и не заменяет консультацию специалиста.</div>
+            </section>
+            
+            <section id="page-diary" class="page hidden">
+                <div class="section-title"><h2>Менструальный дневник</h2><p>Записывай наблюдения спокойно и без оценок.</p></div>
+                <div class="panel">
+                    <h3>Добавить менструацию</h3>
+                    <form id="form">
+                        <div class="formgrid">
+                            <div class="field"><label for="start">Дата начала</label><input id="start" type="date" required></div>
+                            <div class="field"><label for="end">Дата окончания</label><input id="end" type="date" required></div>
+                            <div class="field"><label for="flow">Обильность</label><select id="flow" required><option value="">Выбери</option><option>Скудное</option><option>Умеренное</option><option>Обильное</option><option>Очень обильное / протекает</option></select></div>
+                            <div class="field"><label for="pain">Боль (0–10)</label><select id="pain"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></div>
+                            <div class="field full"><label>Симптомы</label><div class="checks" id="symptoms"><label class="check"><input type="checkbox" value="Слабость">Слабость</label><label class="check"><input type="checkbox" value="Головная боль">Головная боль</label><label class="check"><input type="checkbox" value="Тошнота">Тошнота</label><label class="check"><input type="checkbox" value="Изменение настроения">Изменение настроения</label><label class="check"><input type="checkbox" value="Головокружение">Головокружение</label></div></div>
+                            <div class="field full"><label for="notes">Заметки (необязательно)</label><textarea id="notes" maxlength="1000" placeholder="Например, мешала ли боль учёбе или сну…"></textarea><span class="hint">Не указывай ФИО, адрес и другие идентифицирующие сведения.</span></div>
+                        </div>
+                        <p id="message" class="hint" role="status"></p>
+                        <div class="actions"><button class="btn" type="submit">Сохранить запись</button><button class="btn secondary" type="reset">Очистить форму</button></div>
+                    </form>
+                </div>
+                <div class="panel">
+                    <h3>Мои записи</h3>
+                    <p id="count" class="muted">Пока записей нет</p>
+                    <div id="entries" class="empty">Здесь появятся записи после сохранения.</div>
+                    <button id="export" class="btn secondary small">Экспорт резервной копии</button> 
+                    <button id="clear" class="btn danger small">Удалить все записи</button>
+                </div>
+                <div class="notice warn">При очень обильном кровотечении, обмороке, выраженной слабости или сильной/внезапной боли обратись за срочной медицинской помощью.</div>
+            </section>
+            
+            <section id="page-learn" class="page hidden">
+                <div class="section-title"><h2>Узнать о цикле</h2><p>Общие сведения для ориентира, не для самодиагностики.</p></div>
+                <div class="education">
+                    <article class="edu"><h3>🌸 Как считать цикл</h3><p>Первым днём цикла считают первый день менструального кровотечения. Длина цикла — число дней от первого дня одной менструации до первого дня следующей.</p><p>В подростковом возрасте важны возраст, время после менархе и симптомы.</p></article>
+                    <article class="edu"><h3>🗓️ Когда обсудить нерегулярность</h3><p>Обсуди изменения с врачом, если менструации надолго исчезли, интервалы часто большие, кровотечения необычно длительные или цикл заметно изменился.</p><p>Один показатель сам по себе не устанавливает диагноз.</p></article>
+                    <article class="edu"><h3>🌿 Вес и гормоны</h3><p>Ожирение может сочетаться с метаболическими и гормональными изменениями, но у нарушений цикла бывают разные причины. Нельзя заключить, что причина именно в весе, по одному симптому.</p><p>Не начинай самостоятельно гормональные препараты или добавки для «нормализации цикла».</p></article>
+                    <article class="edu"><h3>🩺 Когда нужна помощь</h3><ul><li>Очень обильное кровотечение или выраженная слабость/головокружение.</li><li>Сильная, внезапная боль или боль, мешающая обычной жизни.</li><li>Менструации отсутствуют длительное время.</li></ul><p>При обмороке, резкой сильной боли или продолжающемся очень обильном кровотечении нужна срочная медицинская оценка.</p></article>
+                </div>
+                <p class="hint">Перед клиническим использованием материалы необходимо проверить по актуальным рекомендациям и согласовать с профильным специалистом.</p>
+            </section>
+            
+            <section id="page-doctor" class="page hidden">
+                <div class="section-title"><h2>Сводка для врача</h2><p>Подготовь наблюдения к консультации.</p></div>
+                <div class="panel">
+                    <h3>Общие сведения о цикле</h3>
+                    <div class="formgrid">
+                        <div class="field"><label for="menarche">Возраст первой менструации (лет)</label><input id="menarche" type="number" min="7" max="20" step=".5" placeholder="Например, 12.5"></div>
+                        <div class="field"><label for="usual">Обычная длина цикла (дней)</label><input id="usual" type="number" min="1" max="120" placeholder="Например, 30"></div>
+                        <div class="field"><label for="last">Дата последней менструации</label><input id="last" type="date"></div>
+                        <div class="field"><label for="impact">Влияние на повседневную жизнь</label><select id="impact"><option value="">Не указано</option><option>Не мешают</option><option>Иногда мешают</option><option>Мешают учёбе, сну или активности</option></select></div>
+                        <div class="field full"><label for="questions">Вопросы врачу</label><textarea id="questions" maxlength="1000" placeholder="Что хочется обсудить на приёме…"></textarea></div>
+                    </div>
+                    <div class="actions"><button class="btn" id="make">Сформировать сводку</button><button class="btn secondary" id="copy">Скопировать</button><button class="btn secondary" id="download">Скачать .txt</button></div>
+                </div>
+                <div class="panel"><h3>Сводка</h3><div id="report" class="report">Нажми «Сформировать сводку».</div></div>
+                <div class="notice">Проверь точность сводки. Это не диагноз и не медицинское заключение.</div>
+            </section>
+        </main>
+        <footer>Menovia · прототип · записи хранятся в браузере этого устройства</footer>
+    </div>
+    <script>
+        const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)],KEY='menovia_demo_periods_v1';let periods=[];try{periods=JSON.parse(localStorage.getItem(KEY)||'[]');if(!Array.isArray(periods))periods=[]}catch(e){periods=[]}
+        function save(){try{localStorage.setItem(KEY,JSON.stringify(periods))}catch(e){alert('Не удалось сохранить. Экспортируй резервную копию.')}}
+        function fmt(s){if(!s)return'не указано';let [y,m,d]=s.split('-');return d+'.'+m+'.'+y}
+        function days(a,b){return Math.round((new Date(b+'T12:00:00')-new Date(a+'T12:00:00'))/86400000)}
+        function page(n){$$('.page').forEach(x=>x.classList.toggle('hidden',x.id!=='page-'+n));$$('nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===n));window.scrollTo({top:0,behavior:'smooth'});if(n==='doctor')report()}
+        $$('nav button').forEach(x=>x.onclick=()=>page(x.dataset.page));$$('[data-go]').forEach(x=>x.onclick=()=>page(x.dataset.go));
+        function render(){let box=$('#entries');$('#count').textContent=periods.length?'Записей: '+periods.length:'Пока записей нет';box.innerHTML='';if(!periods.length){box.className='empty';box.textContent='Здесь появятся записи после сохранения.';return}box.className='';[...periods].sort((a,b)=>b.start.localeCompare(a.start)).forEach(p=>{let el=document.createElement('div');el.className='entry';let d=document.createElement('div'),strong=document.createElement('strong'),meta=document.createElement('p'),desc=document.createElement('p'),del=document.createElement('button');strong.textContent=fmt(p.start)+' — '+fmt(p.end);meta.textContent=p.days+' дн. · '+p.flow+' · боль: '+p.pain+'/10';desc.textContent=[...(p.symptoms||[]),p.notes].filter(Boolean).join(' · ')||'Симптомы не отмечены';d.append(strong,meta,desc);del.className='btn danger small';del.textContent='Удалить';del.onclick=()=>{if(confirm('Удалить эту запись?')){periods=periods.filter(x=>x.id!==p.id);save();render();report()}};el.append(d,del);box.append(el)})}
+        $('#form').onsubmit=e=>{e.preventDefault();let a=$('#start').value,b=$('#end').value,msg=$('#message');msg.textContent='';if(b<a){msg.textContent='Дата окончания не может быть раньше даты начала.';return}let now=new Date();now.setHours(23,59,59,999);if(new Date(a+'T12:00:00')>now||new Date(b+'T12:00:00')>now){msg.textContent='Для прошедшей менструации выбери даты не позднее сегодняшнего дня.';return}let n=days(a,b)+1;if(n>30){msg.textContent='Проверь даты: длительность больше 30 дней. Если кровотечение действительно продолжается, обсуди это с врачом.';return}if(n>8&&!confirm('Указано '+n+' дней кровотечения. Продолжить? Если кровотечение продолжается, обсуди это с врачом.'))return;if(periods.some(p=>!(b<p.start||a>p.end))){msg.textContent='Даты пересекаются с существующей записью. Проверь записи.';return}periods.push({id:Date.now().toString(),start:a,end:b,days:n,flow:$('#flow').value,pain:$('#pain').value,symptoms:$$('#symptoms input:checked').map(x=>x.value),notes:$('#notes').value.trim()});save();render();e.target.reset();msg.textContent='Запись сохранена в браузере на этом устройстве.';report()};
+        $('#clear').onclick=()=>{if(confirm('Удалить все записи с этого устройства?')){periods=[];save();render();report()}};
+        function download(name,content,type){let u=URL.createObjectURL(new Blob([content],{type})),a=document.createElement('a');a.href=u;a.download=name;document.body.append(a);a.click();a.remove();URL.revokeObjectURL(u)}
+        $('#export').onclick=()=>download('menovia-backup.json',JSON.stringify({exportedAt:new Date().toISOString(),periods},null,2),'application/json');
+        function report(){let lines=['MENOVIA — СВОДКА ДЛЯ ОБСУЖДЕНИЯ С ВРАЧОМ','Дата: '+new Date().toLocaleDateString('ru-RU'),'','Возраст менархе: '+($('#menarche').value?$('#menarche').value+' лет':'не указано'),'Обычная длина цикла: '+($('#usual').value?$('#usual').value+' дней':'не указано'),'Последняя менструация: '+fmt($('#last').value),'Влияние симптомов: '+($('#impact').value||'не указано'),'','Записи дневника:'];if(!periods.length)lines.push('Записей пока нет.');else [...periods].sort((a,b)=>a.start.localeCompare(b.start)).forEach((p,i)=>lines.push((i+1)+'. '+fmt(p.start)+'–'+fmt(p.end)+' ('+p.days+' дн.); кровотечение: '+p.flow+'; боль: '+p.pain+'/10; симптомы: '+((p.symptoms||[]).join(', ')||'не отмечены')+'; заметки: '+(p.notes||'нет')));lines.push('','Вопросы врачу: '+($('#questions').value.trim()||'не указаны'),'','Это пользовательская сводка, не диагноз и не медицинское заключение.');$('#report').textContent=lines.join('\n');return lines.join('\n')}
+        $('#make').onclick=report;$('#copy').onclick=async()=>{let t=report();try{await navigator.clipboard.writeText(t);alert('Сводка скопирована.')}catch(e){let a=document.createElement('textarea');a.value=t;document.body.append(a);a.select();document.execCommand('copy');a.remove();alert('Если копирование не сработало, выдели текст вручную.')}};$('#download').onclick=()=>download('menovia-summary.txt',report(),'text/plain;charset=utf-8');render();report();
+    </script>
+</body>
+</html>
