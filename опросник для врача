@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Навигатор — здоровье подростка</title>
+
+<style>
+:root {
+  --purple: #8064d8;
+  --purple-light: #f0ebff;
+  --pink: #fff0f5;
+  --ink: #292b3d;
+  --muted: #77798c;
+  --line: #e8e6ef;
+  --white: #ffffff;
+  --warning: #fff3d6;
+  --green: #eaf8ef;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f7f6fb;
+  color: var(--ink);
+  font-family: Arial, sans-serif;
+  line-height: 1.55;
+}
+
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 20px 15px 40px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  background: var(--purple-light);
+  font-size: 27px;
+}
+
+.brand-name {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.brand-subtitle {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.hero {
+  padding: 26px;
+  border-radius: 25px;
+  background: linear-gradient(135deg, #eee8ff, #fff0f5);
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: clamp(27px, 6vw, 37px);
+  line-height: 1.2;
+  margin: 12px 0;
+}
+
+.tag {
+  display: inline-block;
+  background: white;
+  color: #654bb5;
+  border-radius: 30px;
+  padding: 5px 11px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 24px;
+  box-shadow: 0 5px 25px #24204008;
+}
+
+h2 {
+  font-size: 25px;
+  margin: 0 0 8px;
+}
+
+.subtitle {
+  color: var(--muted);
+  margin-top: 0;
+  margin-bottom: 22px;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.progress {
+  height: 8px;
+  border-radius: 10px;
+  background: #eceaf3;
+  overflow: hidden;
+  margin-bottom: 25px;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0;
+  background: var(--purple);
+  transition: width 0.3s;
+}
+
+.question {
+  font-weight: bold;
+  margin: 22px 0 10px;
+}
+
+.optional {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: normal;
+}
+
+.options {
+  display: grid;
+  gap: 9px;
+}
+
+.option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 13px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+.option:has(input:checked) {
+  border-color: var(--purple);
+  background: var(--purple-light);
+}
+
+.option input {
+  margin-top: 5px;
+  accent-color: var(--purple);
+}
+
+input[type="text"],
+input[type="number"],
+textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d9d6e5;
+  border-radius: 12px;
+  font: inherit;
+}
+
+textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--purple);
+}
+
+.help-star {
+  border: none;
+  background: #fff0c7;
+  color: #8b5c00;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.hint {
+  padding: 13px;
+  background: #f5f2ff;
+  border-radius: 13px;
+  font-size: 14px;
+  margin: 15px 0;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+button {
+  font: inherit;
+}
+
+.btn {
+  padding: 12px 17px;
+  border: none;
+  border-radius: 13px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-primary {
+  color: white;
+  background: var(--purple);
+}
+
+.btn-secondary {
+  color: var(--ink);
+  background: #efedf5;
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.alert {
+  border-radius: 13px;
+  padding: 14px;
+  margin: 15px 0;
+  font-size: 14px;
+}
+
+.alert-warning {
+  background: var(--warning);
+}
+
+.alert-normal {
+  background: var(--green);
+}
+
+.report-section {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 15px;
+  margin: 12px 0;
+}
+
+.report-section h3 {
+  margin-top: 0;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.small {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  inset
+
+: 0;
+  padding: 20px;
+  background: #25233d88;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.modal {
+  max-width: 430px;
+  width: 100%;
+  padding: 22px;
+  background: white;
+  border-radius: 20px;
+}
+
+.modal-close {
+  float: right;
+}
+
+footer {
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+max-width: 480px {
+  .card {
+    padding: 17px;
+  }
+
+  .hero {
+    padding: 21px;
+  }
+}
+
+@media print {
+  body {
+    background: white;
+  }
+
+  header, .hero, .no-print, footer {
+    display: none !important;
+  }
+
+  .card {
+    border: none;
+    box-shadow: none;
+    padding: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+  <header>
+    <div class="logo">✿</div>
+    <div>
+      <div class="brand-name">Навигатор</div>
+      <div class="brand-subtitle">
+        Анкета перед консультацией
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <span class="tag">ДЕМО-ВЕРСИЯ</span>
+    <h1>Давай разберёмся,
+что тебя беспокоит 💜</h1>
+    <p>
+      Здесь можно спокойно рассказать о своём самочувствии.
+      Нет правильных или неправильных ответов.
+      Твои ответы помогут подготовиться к разговору с врачом.
+    </p>
+    <p class="small">
+      Не вводи настоящие персональные данные.
+      Эта демонстрационная версия не отправляет ответы на сервер.
+    </p>
+  </section>
+
+  <main class="card">
+
+    <div id="questionnaire">
+      <div class="progress-info">
+        <span id="step-label"></span>
+        <span id="percent"></span>
+      </div>
+
+      <div class="progress">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+
+      <div id="step-content"></div>
+
+      <div class="actions">
+        <button class="btn btn-secondary"
+                id="back-button"
+                type="button">
+          ← Назад
+        </button>
+
+        <button class="btn btn-primary"
+                id="next-button"
+                type="button">
+          Продолжить →
+        </button>
+      </div>
+
+      <p class="small">
+        ★ Нажми на звёздочку, если хочешь узнать значение термина.
+      </p>
+    </div>
+
+    <div id="report" class="hidden"></div>
+
+  </main>
+
+  <footer>
+    Прототип для обсуждения с врачами.
+    Не предназначен для самостоятельной диагностики.
+  </footer>
+
+</div>
+
+<div class="modal-backdrop" id="modal-backdrop">
+  <div class="modal">
+    <button class="btn btn-secondary modal-close"
+            id="modal-close">
+      Закрыть ✕
+    </button>
+    <h3 id="modal-title"></h3>
+    <p id="modal-text"></p>
+  </div>
+</div>
+
+<script>
+/* ----------------------------------
+   1. СЛОВАРЬ МЕДИЦИНСКИХ ТЕРМИНОВ
+---------------------------------- */
+
+const glossary = {
+  "Менструальный цикл": {
+    title: "Менструальный цикл",
+    text: "Промежуток от первого дня одной менструации до первого дня следующей."
+  },
+
+  "Менструация": {
+    title: "Менструация",
+    text: "Кровянистые выделения, которые обычно повторяются циклически."
+  },
+
+  "Выделения": {
+    title: "Влагалищные выделения",
+    text: "Жидкость или слизь из влагалища. Их количество и вид могут меняться. По одному описанию выделений нельзя точно определить причину изменений."
+  },
+
+  "Вульва": {
+    title: "Вульва",
+    text: "Наружные половые органы. Влагалище — это внутренний канал, поэтому эти понятия не означают одно и то же."
+  },
+
+  "Дизурия": {
+    title: "Дизурия",
+    text: "Боль, жжение или неприятные ощущения при мочеиспускании."
+  },
+
+  "Шкала боли": {
+    title: "Шкала боли 0–10",
+    text: "0 означает отсутствие боли, 10 — максимально сильную боль, которую ты можешь представить. Это самооценка, а не диагноз."
+  },
+
+  "Межменструальное кровотечение": {
+    title: "Межменструальное кровотечение",
+    text: "Кровянистые выделения между ожидаемыми менструациями."
+  }
+};
+
+/* ----------------------------------
+   2. СТРУКТУРА АНКЕТЫ
+---------------------------------- */
+
+const steps = [
+
+  {
+    title: "Шаг 1. Знакомство",
+    subtitle: "Немного информации, чтобы начать.",
+
+questions: [
+      {
+        id: "age",
+        label: "Сколько тебе лет?",
+        type: "number",
+        min: 8,
+        max: 19,
+        required: true
+      },
+
+      {
+        id: "reason",
+        label: "С чем ты хотела бы обратиться?",
+        type: "multi",
+        required: true,
+        options: [
+          "Нерегулярные или отсутствующие месячные",
+          "Болезненные месячные",
+          "Обильные или длительные кровотечения",
+          "Изменения выделений",
+          "Зуд или раздражение",
+          "Боль внизу живота",
+          "Другой вопрос",
+          "Пока не уверена"
+        ]
+      }
+    ]
+  },
+
+  {
+    title: "Шаг 2. Менструации",
+    subtitle: "Отвечай так, как подходит именно тебе.",
+    questions: [
+      {
+        id: "menarche",
+        label: "Начинались ли у тебя менструации?",
+        type: "single",
+        required: true,
+        options: [
+          "Да",
+          "Нет",
+          "Не уверена"
+        ]
+      },
+
+      {
+        id: "last-period",
+        label: "Когда началась последняя менструация?",
+        type: "single",
+        required: false,
+        showIf: {
+          id: "menarche",
+          value: "Да"
+        },
+        options: [
+          "В течение последних 4 недель",
+          "1–3 месяца назад",
+          "Более 3 месяцев назад",
+          "Не помню"
+        ]
+      },
+
+      {
+        id: "regularity",
+        label: "Как обычно приходят месячные?",
+        type: "single",
+        required: false,
+        showIf: {
+          id: "menarche",
+          value: "Да"
+        },
+        options: [
+          "Примерно регулярно",
+          "Иногда сильно задерживаются",
+          "Промежутки сильно различаются",
+          "Пока трудно понять"
+        ]
+      },
+
+      {
+        id: "duration",
+        label: "Как долго обычно идут месячные?",
+        type: "single",
+        required: false,
+        showIf: {
+          id: "menarche",
+          value: "Да"
+        },
+        options: [
+          "1–3 дня",
+          "4–7 дней",
+          "8 дней или дольше",
+          "Не знаю"
+        ]
+      },
+
+      {
+        id: "heavy",
+        label: "Бывает ли кровотечение настолько обильным, что средства гигиены приходится менять очень часто?",
+        type: "single",
+        required: false,
+        showIf: {
+          id: "menarche",
+          value: "Да"
+        },
+        options: [
+          "Нет",
+          "Иногда",
+          "Часто",
+          "Не уверена"
+        ]
+      }
+    ]
+  },
+
+  {
+    title: "Шаг 3. Боль и самочувствие",
+    subtitle: "Важно понять, как симптомы влияют на твою жизнь.",
+    questions: [
+      {
+        id: "pain",
+        label: "Бывает ли у тебя боль внизу живота?",
+        type: "single",
+        required: true,
+        options: [
+          "Нет",
+          "Иногда",
+          "Часто",
+          "Почти каждый цикл",
+          "Боль есть сейчас"
+        ]
+      },
+
+      {
+        id: "pain-score",
+        label: "Насколько сильной бывает боль?",
+        term: "Шкала боли",
+        type: "range",
+        min: 0,
+        max: 10,
+        required: false,
+        showIf: {
+          id: "pain",
+          notValue: "Нет"
+        }
+      },
+
+      {
+        id: "impact",
+        label: "Мешает ли боль учёбе, сну или привычным делам?",
+        type: "single",
+        required: false,
+        showIf: {
+          id: "pain",
+          notValue: "Нет"
+        },
+        options: [
+          "Не мешает",
+          "Немного мешает",
+          "Приходится отменять некоторые дела",
+          "Часто не могу заниматься обычными делами"
+        ]
+      },
+
+      {
+        id: "faint",
+        label: "Были ли обмороки или выраженная слабость?",
+        type: "single",
+        required: true,
+        options: [
+          "Нет",
+          "Да",
+          "Не уверена"
+        ]
+      }
+    ]
+  },
+
+  {
+    title: "Шаг 4. Выделения и раздражение",
+    subtitle: "Эти вопросы обычны для медицинской консультации.",
+    questions: [
+      {
+        id: "discharge",
+
+label: "Замечала ли ты изменения выделений?",
+        term: "Выделения",
+        type: "single",
+        required: true,
+        options: [
+          "Нет, ничего необычного",
+          "Стало больше, чем обычно",
+          "Изменился цвет или консистенция",
+          "Появился непривычный запах",
+          "Есть кровь вне месячных",
+          "Не уверена"
+        ]
+      },
+
+      {
+        id: "itch",
+        label: "Есть ли зуд или раздражение в области вульвы?",
+        term: "Вульва",
+        type: "single",
+        required: true,
+        options: [
+          "Нет",
+          "Да",
+          "Иногда"
+        ]
+      },
+
+      {
+        id: "urination",
+        label: "Бывает ли жжение или боль при мочеиспускании?",
+        term: "Дизурия",
+        type: "single",
+        required: true,
+        options: [
+          "Нет",
+          "Да",
+          "Иногда",
+          "Не уверена"
+        ]
+      },
+
+      {
+        id: "fever",
+        label: "Есть ли сейчас температура или сильная боль внизу живота?",
+        type: "single",
+        required: true,
+        options: [
+          "Нет",
+          "Да",
+          "Не уверена"
+        ]
+      }
+    ]
+  },
+
+  {
+    title: "Шаг 5. Твои вопросы",
+    subtitle: "Этот раздел необязателен.",
+    questions: [
+      {
+        id: "concern",
+        label: "Что тебя беспокоит больше всего?",
+        type: "textarea",
+        required: false,
+        placeholder: "Напиши своими словами..."
+      },
+
+      {
+        id: "question",
+        label: "Что ты хотела бы спросить у врача?",
+        type: "textarea",
+        required: false,
+        placeholder: "Можно задать любой вопрос..."
+      }
+    ]
+  }
+];
+
+/* ----------------------------------
+   3. СОСТОЯНИЕ ПРИЛОЖЕНИЯ
+---------------------------------- */
+
+let currentStep = 0;
+const answers = {};
+
+const $ = id => document.getElementById(id);
+
+function isVisible(question) {
+  if (!question.showIf) return true;
+
+  const rule = question.showIf;
+  const value = answers[rule.id];
+
+  if (rule.notValue !== undefined) {
+    return value !== rule.notValue;
+  }
+
+  return value === rule.value;
+}
+
+/* ----------------------------------
+   4. ОТОБРАЖЕНИЕ ВОПРОСОВ
+---------------------------------- */
+
+function render() {
+  const step = steps[currentStep];
+
+  $("step-label").textContent =
+    `Этап ${currentStep + 1} из ${steps.length}`;
+
+  const percent = Math.round(
+    ((currentStep + 1) / steps.length) * 100
+  );
+
+  $("percent").textContent = percent + "%";
+  $("progress-bar").style.width = percent + "%";
+
+  $("back-button").disabled = currentStep === 0;
+
+  $("next-button").textContent =
+    currentStep === steps.length - 1
+      ? "Сформировать резюме ✓"
+      : "Продолжить →";
+
+  let html = `
+    <h2>${step.title}</h2>
+    <p class="subtitle">${step.subtitle}</p>
+  `;
+
+  step.questions
+    .filter(isVisible)
+    .forEach(question => {
+      html += renderQuestion(question);
+    });
+
+  $("step-content").innerHTML = html;
+
+  attachEvents();
+}
+
+function renderQuestion(q) {
+  const value = answers[q.id];
+
+  const star = q.term
+    ? `<button class="help-star"
+        type="button"
+        data-term="${q.term}"
+        aria-label="Объяснить термин">★</button>`
+    : "";
+
+  let html = `
+    <div class="question">
+      ${q.label} ${star}
+      ${q.required
+        ? ""
+        : '<span class="optional">(необязательно)</span>'}
+    </div>
+  `;
+
+  if (q.type === "single" || q.type === "multi") {
+    html += '<div class="options">';
+
+    q.options.forEach(option => {
+      const checked = q.type === "multi"
+        ? (value || []).includes(option)
+        : value === option;
+
+      html += `
+        <label class="option">
+          <input
+            type="${q.type === "multi" ? "checkbox" : "radio"}"
+            name="${q.id}"
+            value="${option}"
+            ${checked ? "checked" : ""}
+          >
+          <span>${option}</span>
+        </label>
+      `;
+    });
+
+    html += "</div>";
+  }
+
+  if (q.type === "number") {
+    html += `
+
+<input
+        id="${q.id}"
+        type="number"
+        min="${q.min}"
+        max="${q.max}"
+        value="${value ?? ""}"
+        placeholder="Возраст в полных годах"
+      >
+    `;
+  }
+
+  if (q.type === "range") {
+    const n = value ?? 0;
+
+    html += `
+      <div class="hint">
+        Твоя оценка: <strong id="range-value">${n}/10</strong>
+      </div>
+
+      <input
+        id="${q.id}"
+        type="range"
+        min="${q.min}"
+        max="${q.max}"
+        value="${n}"
+      >
+
+      <div class="progress-info">
+        <span>0 — нет боли</span>
+        <span>10 — очень сильная боль</span>
+      </div>
+    `;
+  }
+
+  if (q.type === "textarea") {
+    html += `
+      <textarea
+        id="${q.id}"
+        placeholder="${q.placeholder}"
+      >${escapeHTML(value || "")}</textarea>
+    `;
+  }
+
+  return html;
+}
+
+function attachEvents() {
+  document.querySelectorAll("[data-term]").forEach(button => {
+    button.addEventListener("click", () => {
+      openGlossary(button.dataset.term);
+    });
+  });
+
+  const step = steps[currentStep];
+
+  step.questions.filter(isVisible).forEach(q => {
+    if (q.type === "single" || q.type === "multi") {
+      document.querySelectorAll(
+        `input[name="${q.id}"]`
+      ).forEach(input => {
+        input.addEventListener("change", () => {
+          if (q.type === "multi") {
+            answers[q.id] = [
+              ...document.querySelectorAll(
+                `input[name="${q.id}"]:checked`
+              )
+            ].map(el => el.value);
+          } else {
+            answers[q.id] = input.value;
+          }
+
+          // Перерисовываем вопросы с условиями показа.
+          if (q.id === "menarche" || q.id === "pain") {
+            render();
+          }
+        });
+      });
+    }
+
+    if (q.type === "number" ||
+        q.type === "textarea" ||
+        q.type === "range") {
+      const input = $(q.id);
+
+      if (!input) return;
+
+      input.addEventListener("input", () => {
+        if (input.value !== "") {
+          answers[q.id] = q.type === "range"
+            ? Number(input.value)
+            : input.value;
+        } else {
+          delete answers[q.id];
+        }
+
+        if (q.type === "range") {
+          $("range-value").textContent =
+            input.value + "/10";
+        }
+      });
+    }
+  });
+}
+
+/* ----------------------------------
+   5. СЛОВАРЬ
+---------------------------------- */
+
+function openGlossary(term) {
+  const item = glossary[term];
+
+  if (!item) return;
+
+  $("modal-title").textContent = item.title;
+  $("modal-text").textContent = item.text;
+  $("modal-backdrop").style.display = "flex";
+}
+
+$("modal-close").addEventListener("click", () => {
+  $("modal-backdrop").style.display = "none";
+});
+
+$("modal-backdrop").addEventListener("click", event => {
+  if (event.target === $("modal-backdrop")) {
+    $("modal-backdrop").style.display = "none";
+  }
+});
+
+/* ----------------------------------
+   6. НАВИГАЦИЯ
+---------------------------------- */
+
+$("back-button").addEventListener("click", () => {
+  if (currentStep > 0) {
+    currentStep--;
+    render();
+  }
+});
+
+$("next-button").addEventListener("click", () => {
+  const step = steps[currentStep];
+
+  // Считываем введённые значения перед переходом.
+  step.questions.filter(isVisible).forEach(q => {
+    const input = $(q.id);
+
+    if (input &&
+        ["number", "textarea", "range"].includes(q.type)) {
+      if (input.value !== "") {
+        answers[q.id] = q.type === "range"
+          ? Number(input.value)
+          : input.value;
+      }
+    }
+
+    if (q.type === "single" || q.type === "multi") {
+      const selected = [
+        ...document.querySelectorAll(
+          `input[name="${q.id}"]:checked`
+        )
+      ].map(el => el.value);
+
+      if (q.type === "multi") {
+        answers[q.id] = selected;
+      } else if (selected.length) {
+        answers[q.id] = selected[0];
+      }
+    }
+  });
+
+  const missing = step.questions
+    .filter(isVisible)
+    .filter(q => {
+      if (!q.required) return false;
+      const value = answers[q.id];
+
+      return value === undefined ||
+        value === "" ||
+        (Array.isArray(value) && value.length === 0);
+    });
+
+  if (missing.length > 0) {
+    alert("Пожалуйста, ответь на обязательные вопросы.");
+    return;
+  }
+
+  if (currentStep < steps.length - 1) {
+    currentStep++;
+    render();
+  } else {
+    showReport();
+  }
+});
+
+/* ----------------------------------
+   7. ФОРМИРОВАНИЕ ОТЧЁТА
+---------------------------------- */
+
+const answerLabels = {
+
+age: "Возраст",
+  reason: "Причина обращения",
+  menarche: "Менструации начинались",
+  "last-period": "Последняя менструация",
+  regularity: "Регулярность менструаций",
+  duration: "Длительность кровотечения",
+  heavy: "Обильность кровотечения",
+  pain: "Боль",
+  "pain-score": "Самооценка боли (0–10)",
+  impact: "Влияние на повседневную жизнь",
+  faint: "Обмороки или слабость",
+  discharge: "Изменения выделений",
+  itch: "Зуд или раздражение",
+  urination: "Боль при мочеиспускании",
+  fever: "Температура или сильная боль",
+  concern: "Основное беспокойство",
+  question: "Вопрос врачу"
+};
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+"<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "'"
+  })[char]);
+}
+
+function showReport() {
+  $("questionnaire").classList.add("hidden");
+  $("report").classList.remove("hidden");
+
+  const rows = Object.keys(answerLabels)
+    .filter(key => {
+      const value = answers[key];
+
+      return value !== undefined &&
+        value !== "" &&
+        (!Array.isArray(value) || value.length > 0);
+    })
+    .map(key => {
+      const value = Array.isArray(answers[key])
+        ? answers[key].join("; ")
+        : answers[key];
+
+      return `
+        <li>
+          <strong>${answerLabels[key]}:</strong>
+${escapeHTML(value)}
+        </li>
+      `;
+    }).join("");
+
+  const warnings = [];
+
+  if (answers.faint === "Да") {
+    warnings.push(
+      "Обмороки или выраженную слабость необходимо сообщить врачу."
+    );
+  }
+
+  if (answers.fever === "Да") {
+    warnings.push(
+      "При температуре вместе с сильной болью нужно срочно сообщить медицинскому специалисту. При тяжёлом или ухудшающемся состоянии — обратиться за неотложной помощью."
+    );
+  }
+
+  if (answers.pain === "Боль есть сейчас" &&
+      Number(answers["pain-score"]) >= 8) {
+    warnings.push(
+      "Сообщи врачу о сильной боли сейчас. При внезапной или нарастающей сильной боли не жди планового приёма."
+    );
+  }
+
+  if (answers.heavy === "Часто") {
+    warnings.push(
+      "Обсуди характер кровотечения с врачом. При очень обильном кровотечении со слабостью или головокружением нужна срочная медицинская оценка."
+    );
+  }
+
+  const warningHTML = warnings.length
+    ? `
+      <div class="alert alert-warning">
+        <strong>Важно:</strong>
+        <ul>
+          ${warnings.map(w => `<li>${escapeHTML(w)}</li>`).join("")}
+        </ul>
+      </div>
+    `
+    : `
+      <div class="alert alert-normal">
+        Резюме сформировано. Отсутствие предупреждений
+        не исключает заболевание и не заменяет консультацию.
+      </div>
+    `;
+
+  $("report").innerHTML = `
+    <span class="tag">ЧЕРНОВИК ДЛЯ ВРАЧА</span>
+
+    <h2 style="margin-top:15px">
+      Твоё резюме готово 🌷
+    </h2>
+
+    <p class="subtitle">
+      Это не диагноз. Врач должен проверить ответы
+      и уточнить необходимые детали.
+    </p>
+
+    ${warningHTML}
+
+    <div class="report-section">
+      <h3>Ответы для обсуждения</h3>
+      <ul>${rows || "<li>Нет заполненных ответов</li>"}</ul>
+    </div>
+
+    <div class="hint">
+      В этой версии используются авторские вопросы и
+      самооценка боли 0–10. Это не комплект валидированных
+      диагностических опросников.
+    </div>
+
+    <div class="actions no-print">
+      <button class="btn btn-secondary" id="edit-button">
+        ← Изменить ответы
+      </button>
+
+<button class="btn btn-primary" id="print-button">
+        Печать / сохранить PDF
+      </button>
+    </div>
+
+    <p class="small">
+      Ответы не отправляются врачу автоматически и не
+      сохраняются на сервере.
+    </p>
+  `;
+
+  $("edit-button").addEventListener("click", () => {
+    currentStep = 0;
+    $("report").classList.add("hidden");
+    $("questionnaire").classList.remove("hidden");
+    render();
+  });
+
+  $("print-button").addEventListener("click", () => {
+    window.print();
+  });
+}
+
+/* ----------------------------------
+   8. ЗАПУСК
+---------------------------------- */
+
+render();
+</script>
+</body>
+</html>
